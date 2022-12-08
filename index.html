@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Metadata -->
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Understanding World Energy Consumption & Renewable Energy Adoption 1966-2020 Using Data Visualisations" />
+  <meta name="keywords" content="Renewable Energy Adoption, World Energy Consumption, Sustainable Energy, Data Visualisation" />
+  <meta name="author" content="co-authored by Karan Manoj Shah, Ishaan Manga" />
+  <!-- Document Title -->
+  <title>Sustainable Energy</title>
+  <!-- D3 -->
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet" />
+  <!-- Styling -->
+  <link rel="stylesheet" href="styles/main.css" />
+  <link rel="stylesheet" href="styles/rangeInput.css" />
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <section>
+      <h1>Sustainable Energy</h1>
+      <p>Scientists and Environmentalists have long been pushing the adoption of renewables as alternatives to our current energy sources. But what are our current energy sources? What is their impact on the environment? How far have countries come on their way to renewables adoption?</p>
+      <p>Let's keep all the scientific mumbo-jumbo aside and understand for real where our energy comes from, it's impact on our environment, and sustainable alternatives.</p>
+    </section>
+  </header>
+
+  <!-- Renewables Adoption & CO2 Emissions Visualisations -->
+  <main class="container-fluid p-0 py-5 m-0 row">
+    <h2 class="mb-4">Adoption of Renewables & CO<sub>2</sub> Emissions</h2>
+    <p class="col-md-8 offset-md-2 mb-3">Adoption of renewables measures the extent to which countries worldwide are using renewable energy sources to generate energy. The following visualisation showcases the absolute annual change in renewables energy by consumption which allows us to estimate whether countries worldwide have been increasing, decreasing, or holding stagnant their generation of energy through renewables sources.</p>
+    <p class="col-md-8 offset-md-2 mb-3">A useful indicator of the environmental consequences of energy generation is greenhouse gas emissions such as CO<sub>2</sub> in the environment. The following visualisation allows you to contrast the adoption of renewables with its effect on CO<sub>2</sub> emissions for the selected region. It is interesting to note that countries slow at renewables adoption or countries reducing their renewables energy output (countries in red) are likely to see higher CO<sub>2</sub> emissions the following year, whereas if the country is holding stagnant or adopting renewable sources, their CO<sub>2</sub> emissions hold stagnant or reduce accordingly.</p>
+    <p class="col-md-8 offset-md-2 mb-5 text-danger"><strong>Note:</strong> Click on a country to view its CO<sub>2</sub> emissions on demand. Click on the same country again to unselect it.</p>
+
+    <!-- Renewables Adoption Chart -->
+    <section class="col-7">
+      <h3>Annual Change In Renewable Energy Generation (TWh)</h3>
+      <p id="primaryChart"></p>
+    </section>
+
+    <!-- CO2 Emissions Chart -->
+    <section class="col-5">
+      <h3 id="secondaryChartTitle"></h3>
+      <p id="secondaryChart"></p>
+    </section>
+
+    <!-- Timeline -->
+    <section id="timeline" class="row align-items-center height-cap">
+      <button onclick="timelineButtonUpdate()" id="plause" class="col-auto p-0 px-2 m-0"><i class="bi bi-play-fill"></i></button>
+      <p class="col-auto py-0 px-2 m-0 leftBorder">1966</p>
+      <input oninput="timelineUpdate()" onchange="primaryChartUpdate()" type="range" name="year" id="year" class="col p-0 m-0" min="1966" max="2020" value="2020">
+      <p class="col-auto py-0 px-2 m-0 rightBorder">2020</p>
+      <p id="yearLabel" class="col-auto py-0 px-3 m-0">2020</p>
+    </section>
+  </main>
+
+  <!-- Energy Sources & Energy Consumption By Source Visualisations -->
+  <main class="container-fluid py-5 m-0 row">
+    <h2 class="mb-4">Energy Sources & Consumption</h2>
+    <p class="col-md-8 offset-md-2 mb-3">You have explored above how the world is adopting to renewable energy sources and what is its impact on the environment. However, what are the various renewable energy sources? What is their energy share in comparison to other energy sources? Let's take a moment here to understand just how much the world's energy demands have grown over the years, and which energy sources are being used to fuel a majority of this growth.</p>
+    <p class="col-md-8 offset-md-2 mb-3">As seen in the visualisation below, the world consumed just above 150 Exajoules of energy in 1965. In 2019, our energy consumption was nearly 4 times that. Note how the energy consumption dropped slightly in 2008 and 2020, which can be attributed to global economic crisis and the Covid-19 pandemic respectively. Amongst the energy sources shown, nuclear energy, hydroelectricity, and "Other Renewables" are considered as sustainable energy sources (nuclear is debatable, of course). "Other Renewables" is cumulative of solar energy, wind energy, biomass fuel, and geothermal energy.</p>
+    <p class="col-md-8 offset-md-2 mb-5 text-danger"><strong>Note:</strong> Hover over the chart to view specific energy consumption breakdown for an year of your preference.</p>
+
+    <!-- World Energy Consumption Chart -->
+    <h3>World Energy Consumption By Source 1965 to 2020 (Exajoule)</h3>
+    <section class="col-lg-6 offset-lg-3"><p id="consumptionChart" class="p-0 m-0"></p></section>
+    <section class="col-lg-3"><p id="consumptionLegend" class="p-0 m-0"></p></section>
+
+    <p class="col-md-8 offset-md-2 mt-5 md-3">Now lets focus on the recent past, specifically the years 2019 and 2020. Explore in the recent years which sources are being used by countries and the world to generate energy, and what is the share of renewables. The "Sources (2019)" and "Sources (2020)" tab allow you to view the share of energy source for your region of selection. The "Sources (Both)" tab allows you to view the change in each energy source from 2019 to 2020 for your selected region. Note that in the recent years, the global share of non-renewable sources has been decreasing whereas the share of renewables (with the exception of Nuclear) has been increasing. While this is good news, clearly, the overall energy profie is still dominated by non-renewables sources, specifically coal, natural gas, and oil.</p>
+    <p class="col-md-8 offset-md-2 mb-5 text-danger"><strong>Note:</strong> Hover over the arcs/bars to see exact energy consumption values. Hovering on an arc shows % share as well.</p>
+
+    <!-- Energy Share 2019-2020 Chart -->
+    <section class="col-lg-6 offset-lg-3">
+      <h3 id="shareChartHeading"></h3>
+
+      <!-- Region Selector -->
+      <p id="regionSelector" class="mt-3">
+        <select onchange="regionSelectorUpdate()" name="countrySelector" id="countrySelector">
+          <option value='Total World' selected>Total World</option>
+        </select>
+      </p>
+
+      <!-- Dynamically Created Chart -->
+      <p id="shareChart"></p>
+
+      <!-- Buttons -->
+      <div id="buttons" class="row align-items-center height-cap">
+        <button onclick="shareChartRedraw(0)" class="col-4 active">Sources (2019)</button>
+        <button onclick="shareChartRedraw(1)" class="col-4">Sources (2020)</button>
+        <button onclick="shareChartRedraw(2)" class="col-4">Sources (Both)</button>
+      </div>
+    </section>
+
+    <p class="col-md-8 offset-md-2 mt-5">Hopefully these visualisations have helped you explore how energy is generated, which energy sources are sustainable, what has the trend in energy generation by sources been, and how this trend been changing in the recent years. The data used in these visualisations was made available by BP Inc. in their <a href="https://www.bp.com/en/global/corporate/energy-economics/statistical-review-of-world-energy.html" target="_blank">2021 Statistical Review of World Energy</a> and by Our World In Data on their <a href="https://ourworldindata.org/renewable-energy" target="_blank">Renewable Energy webpage</a>.</p>
+  </main>
+
+  <!-- Footer -->
+  <footer class="container pb-4">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+      <li class="nav-item"><span class="nav-link px-2 text-muted">Karan Manoj Shah (103141481)</span></li>
+      <li class="nav-item"><span class="nav-link px-2 text-muted">Ishaan Manga (102878937)</span></li>
+    </ul>
+    <p class="text-center text-muted">COS30045 Data Visualisation | Semester 1 2022 | Swinburne University of Technology</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="scripts/main.js"></script>
+  <script src="scripts/updates.js"></script>
+  <script src="scripts/charts/choropleth.js"></script>
+  <script src="scripts/charts/line.js"></script>
+  <script src="scripts/charts/pie.js"></script>
+  <script src="scripts/charts/bar.js"></script>
+  <script src="scripts/charts/stackedArea.js"></script>
+</body>
+</html>
